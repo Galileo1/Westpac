@@ -16,7 +16,7 @@ public class KiwiSaverCalc extends TestBase{
 	
 
 		
-		WebDriver driver;
+		//WebDriver driver;
 		
 		KiwiSaverCalc kiwisaverpage;
 		
@@ -96,6 +96,7 @@ public class KiwiSaverCalc extends TestBase{
 		public KiwiSaverCalc()
 		{
 			PageFactory.initElements(driver, this);
+			testutil = new TestUtil();
 		}
 		
 		
@@ -104,7 +105,8 @@ public class KiwiSaverCalc extends TestBase{
 		 {
 			Actions action=new Actions(driver);
 			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);		
-			action.moveToElement(kiwisaver).click(kiwisavercalc).build().perform();		
+			action.moveToElement(kiwisaver).click(kiwisavercalc).build().perform();
+			testutil.waitForPageLoaded();
 			clickstart.click();
 			 
 		 }
@@ -112,6 +114,7 @@ public class KiwiSaverCalc extends TestBase{
 		public String VerifyInfomessage()
 		
 		{
+			testutil.waitForPageLoaded();
 			testutil.switchtoFrame();
 			   icon.click();
 			   return current_age_info.getText();

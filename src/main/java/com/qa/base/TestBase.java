@@ -1,6 +1,7 @@
 package com.qa.base;
 
 
+	import java.io.File;
 	import java.io.FileInputStream;
 	import java.io.FileNotFoundException;
 	import java.io.IOException;
@@ -24,8 +25,11 @@ import com.qa.util.TestUtil;
 			prop= new Properties();
 			FileInputStream fis;
 			try {
-				fis = new FileInputStream
-						("C:\\Users\\ssinha\\eclipse-workspace\\WestpacRetirementCalc\\src\\main\\java\\com\\qa\\config\\config.properties");
+				// Getting ClassLoader obj
+				ClassLoader classLoader = this.getClass().getClassLoader();
+				// Getting resource(File) from class loader
+				File configFile = new File(classLoader.getResource("config.properties").getFile());
+				fis = new FileInputStream(configFile);
 				try {
 					prop.load(fis);
 				} catch (FileNotFoundException e) {
@@ -40,7 +44,13 @@ import com.qa.util.TestUtil;
 		public static void initialization()
 		{
 			prop.getProperty("browser");
-			System.setProperty("webdriver.chrome.driver", "C:\\\\Users\\\\ssinha\\\\Desktop\\\\driver\\\\chromedriver.exe");
+			String osname =System.getProperty("os.name").toLowerCase();
+			String projectLocation = System.getProperty("user.dir");
+			if (osname.contains("windows") && prop.getProperty("browser").contains("chrome")) {
+				System.setProperty("webdriver.chrome.driver", projectLocation + "//src//main//resources//win//chromedriver.exe");
+			} else if (osname.contains("mac os") && prop.getProperty("browser").contains("chrome")) {
+				System.setProperty("webdriver.chrome.driver", projectLocation + "//src//main//resources//mac//chromedriver");
+			}
 			driver=new ChromeDriver();
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();

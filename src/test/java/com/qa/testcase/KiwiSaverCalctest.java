@@ -37,7 +37,7 @@ public class KiwiSaverCalctest extends TestBase{
 		kiwisaverpage.ClickonCalc();
 		 String actualCurrentAgeMessage = kiwisaverpage.VerifyInfomessage();
 
-	        String expectedTitlePage = "This calculator has an age limit of 18 to 64 years old";
+	        String expectedTitlePage = "This calculator has an age limit of 18 to 64 years old.";
 	        Assert.assertEquals(actualCurrentAgeMessage, expectedTitlePage);		
 		    
 	}
